@@ -21,4 +21,8 @@ public interface ArtGalleryService {
     List<Artwork> getAllArtworks();
     List<Artwork> filterArtworksByType(String type);
     List<Artwork> searchArtworksByTitle(String title);
+
+    List<Artwork> filterArtworks(String artistName, String type);
+
+    List<Artwork> searchAndFilterArtworks(String title, String artist, String type);
 }

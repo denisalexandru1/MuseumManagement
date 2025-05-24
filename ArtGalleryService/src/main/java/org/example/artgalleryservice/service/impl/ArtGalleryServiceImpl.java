@@ -96,4 +96,71 @@ public class ArtGalleryServiceImpl implements ArtGalleryService{
     public List<Artwork> searchArtworksByTitle(String title) {
         return artworkRepository.findByTitleContainingIgnoreCase(title);
     }
+
+    @Override
+    public List<Artwork> filterArtworks(String artistName, String type) {
+        if (artistName != null && !artistName.isEmpty() && type != null && !type.isEmpty()) {
+            return artworkRepository.findByArtistNameIgnoreCaseAndTypeContainingIgnoreCase(artistName, type);
+        } else if (artistName != null && !artistName.isEmpty()) {
+            return artworkRepository.findByArtistNameIgnoreCase(artistName);
+        } else if (type != null && !type.isEmpty()) {
+            return artworkRepository.findByTypeContainingIgnoreCase(type);
+        } else {
+            return artworkRepository.findAll();
+        }
+    }
+
+    public List<Artwork> searchAndFilterArtworks(String title, String artist, String type) {
+        boolean hasTitle = title != null && !title.isBlank();
+        boolean hasArtist = artist != null && !artist.isBlank();
+        boolean hasType = type != null && !type.isBlank();
+
+        // Dacă există artist și tip
+        if (hasArtist && hasType) {
+            // Dacă avem și title, trebuie filtrat manual după title (căci repo nu are direct metoda asta)
+            List<Artwork> byArtistAndType = artworkRepository.findByArtistNameIgnoreCaseAndTypeContainingIgnoreCase(artist, type);
+            if (hasTitle) {
+                String lowerTitle = title.toLowerCase();
+                return byArtistAndType.stream()
+                        .filter(a -> a.getTitle() != null && a.getTitle().toLowerCase().contains(lowerTitle))
+                        .toList();
+            } else {
+                return byArtistAndType;
+            }
+        }
+
+        // Dacă există doar artist
+        if (hasArtist) {
+            List<Artwork> byArtist = artworkRepository.findByArtistNameIgnoreCase(artist);
+            if (hasTitle) {
+                String lowerTitle = title.toLowerCase();
+                return byArtist.stream()
+                        .filter(a -> a.getTitle() != null && a.getTitle().toLowerCase().contains(lowerTitle))
+                        .toList();
+            } else {
+                return byArtist;
+            }
+        }
+
+        // Dacă există doar tip
+        if (hasType) {
+            List<Artwork> byType = artworkRepository.findByTypeContainingIgnoreCase(type);
+            if (hasTitle) {
+                String lowerTitle = title.toLowerCase();
+                return byType.stream()
+                        .filter(a -> a.getTitle() != null && a.getTitle().toLowerCase().contains(lowerTitle))
+                        .toList();
+            } else {
+                return byType;
+            }
+        }
+
+        // Dacă avem doar titlu
+        if (hasTitle) {
+            return artworkRepository.findByTitleContainingIgnoreCase(title);
+        }
+
+        // Dacă nu avem niciun filtru, returnăm toate operele
+        return artworkRepository.findAll();
+    }
 }

@@ -1,5 +1,6 @@
 package org.example.artgalleryservice.controller;
 
+import org.example.artgalleryservice.dto.ArtworkDto;
 import org.example.artgalleryservice.entity.Artist;
 import org.example.artgalleryservice.entity.Artwork;
 import org.example.artgalleryservice.repository.ArtworkRepository;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/api/gallery")
 public class ArtGalleryController {
     private final ArtGalleryService artGalleryService;
@@ -70,19 +72,22 @@ public class ArtGalleryController {
     }
 
     @GetMapping("/artwork")
-    public ResponseEntity<List<Artwork>> getAllArtworks() {
+    public ResponseEntity<List<ArtworkDto>> getAllArtworks() {
         List<Artwork> artworks = artGalleryService.getAllArtworks();
-        return ResponseEntity.ok(artworks);
+        List<ArtworkDto> dtoList = artworks.stream()
+                .map(ArtworkDto::new)
+                .toList();
+        return ResponseEntity.ok(dtoList);
     }
 
     @GetMapping("/artwork/search")
-    public ResponseEntity<List<Artwork>> searchArtworksByTitle(@RequestParam String title) {
-        List<Artwork> artworks = artGalleryService.searchArtworksByTitle(title);
-        return ResponseEntity.ok(artworks);
-    }
-    @GetMapping("/artwork/filter")
-    public ResponseEntity<List<Artwork>> filterArtworksByType(@RequestParam String type) {
-        List<Artwork> artworks = artGalleryService.filterArtworksByType(type);
-        return ResponseEntity.ok(artworks);
+    public ResponseEntity<List<ArtworkDto>> searchAndFilterArtworks(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String artist,
+            @RequestParam(required = false) String type) {
+
+        List<Artwork> artworks = artGalleryService.searchAndFilterArtworks(title, artist, type);
+        List<ArtworkDto> dtoList = artworks.stream().map(ArtworkDto::new).toList();
+        return ResponseEntity.ok(dtoList);
     }
 }
