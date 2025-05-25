@@ -1,6 +1,7 @@
 package org.example.exportservice.service;
 
 import org.example.exportservice.client.ArtGalleryClient;
+import org.example.exportservice.client.UsersClient;
 import org.example.exportservice.service.decorator.*;
 import org.springframework.stereotype.Service;
 
@@ -8,9 +9,11 @@ import org.springframework.stereotype.Service;
 public class ExportService {
 
     private final ArtGalleryClient artGalleryClient;
+    private final UsersClient usersClient;
 
-    public ExportService(ArtGalleryClient artGalleryClient) {
+    public ExportService(ArtGalleryClient artGalleryClient, UsersClient usersClient) {
         this.artGalleryClient = artGalleryClient;
+        this.usersClient = usersClient;
     }
 
     public String exportData(String exportType, String entityType) {
@@ -32,10 +35,11 @@ public class ExportService {
     }
 
     private Object getData(String entityType) {
-        if (!"artwork".equalsIgnoreCase(entityType)) {
-            throw new IllegalArgumentException("Currently only artwork export is supported");
+        if ("artwork".equalsIgnoreCase(entityType)) {
+            return artGalleryClient.getArtworks();
+        } else if ("user".equalsIgnoreCase(entityType)) {
+            return usersClient.getUsers();
         }
-
-        return artGalleryClient.getArtworks();
+        throw new IllegalArgumentException("Currently only artwork and user export are supported");
     }
 }
