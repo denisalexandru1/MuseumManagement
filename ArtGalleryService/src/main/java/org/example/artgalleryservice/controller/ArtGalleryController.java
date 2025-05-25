@@ -4,6 +4,7 @@ import org.example.artgalleryservice.dto.RetrieveArtworkDto;
 import org.example.artgalleryservice.dto.UpdateArtworkDto;
 import org.example.artgalleryservice.entity.Artist;
 import org.example.artgalleryservice.entity.Artwork;
+import org.example.artgalleryservice.repository.ArtworkRepository;
 import org.example.artgalleryservice.service.ArtGalleryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -87,5 +88,17 @@ public class ArtGalleryController {
         List<Artwork> artworks = artGalleryService.searchAndFilterArtworks(title, artist, type);
         List<RetrieveArtworkDto> dtoList = artworks.stream().map(RetrieveArtworkDto::new).toList();
         return ResponseEntity.ok(dtoList);
+    }
+
+    @GetMapping("/statistics/type-count")
+    public ResponseEntity<List<ArtworkRepository.TypeCount>> getArtworkCountByType() {
+        List<ArtworkRepository.TypeCount> stats = artGalleryService.getArtworkCountByType();
+        return ResponseEntity.ok(stats);
+    }
+
+    @GetMapping("/statistics/artist-count")
+    public ResponseEntity<List<ArtworkRepository.ArtistCount>> getArtworkCountByArtist() {
+        List<ArtworkRepository.ArtistCount> stats = artGalleryService.getArtworkCountByArtist();
+        return ResponseEntity.ok(stats);
     }
 }

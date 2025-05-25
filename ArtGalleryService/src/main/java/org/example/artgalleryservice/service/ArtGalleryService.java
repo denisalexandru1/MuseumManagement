@@ -4,6 +4,7 @@ import org.example.artgalleryservice.dto.RetrieveArtworkDto;
 import org.example.artgalleryservice.dto.UpdateArtworkDto;
 import org.example.artgalleryservice.entity.Artist;
 import org.example.artgalleryservice.entity.Artwork;
+import org.example.artgalleryservice.repository.ArtworkRepository;
 
 import java.util.List;
 import java.util.UUID;
@@ -27,4 +28,7 @@ public interface ArtGalleryService {
     List<Artwork> filterArtworks(String artistName, String type);
 
     List<Artwork> searchAndFilterArtworks(String title, String artist, String type);
+
+    List<ArtworkRepository.TypeCount> getArtworkCountByType();
+    List<ArtworkRepository.ArtistCount> getArtworkCountByArtist();
 }

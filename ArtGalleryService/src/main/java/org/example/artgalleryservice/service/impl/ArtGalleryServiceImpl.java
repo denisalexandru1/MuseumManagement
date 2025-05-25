@@ -179,4 +179,14 @@ public class ArtGalleryServiceImpl implements ArtGalleryService{
         // Dacă nu avem niciun filtru, returnăm toate operele
         return artworkRepository.findAll();
     }
+
+    @Override
+    public List<ArtworkRepository.TypeCount> getArtworkCountByType() {
+        return artworkRepository.countByType();
+    }
+
+    @Override
+    public List<ArtworkRepository.ArtistCount> getArtworkCountByArtist() {
+        return artworkRepository.countByArtist();
+    }
 }
