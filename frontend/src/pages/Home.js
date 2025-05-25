@@ -6,7 +6,9 @@ function Home({ t }) {
     // Citește userul din localStorage
     const userStr = localStorage.getItem("loggedInUser");
     const user = userStr ? JSON.parse(userStr) : null;
-    const isEmployee = user?.role === "EMPLOYEE";
+    const isEmployee = user?.role === "EMPLOYEE" || user?.role === "MANAGER" || user?.role === "ADMIN";
+    const isManager = user?.role === "MANAGER" || user?.role === "ADMIN";
+    const isAdmin = user?.role === "ADMIN";
 
     return (
         <div style={{
@@ -71,6 +73,14 @@ function Home({ t }) {
                         <Link to="/employee">
                             <sl-button variant="warning" size="large" pill style={{ width: '100%' }}>
                                 ⚙️ {t.employeeOperations}
+                            </sl-button>
+                        </Link>
+                    )}
+
+                    {isManager && (
+                        <Link to="/stats">
+                            <sl-button variant="neutral" size="large" pill style={{ width: '100%' }}>
+                                📊 {t.artworkStatistics}
                             </sl-button>
                         </Link>
                     )}

@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import translations from "./translations/translations";
 import ManageArtists from "./pages/ManageArtists";
 import ManageArtworks from "./pages/ManageArtworks";
+import ArtworksStatistics from "./pages/ArtworksStatistics";
 
 function App() {
     const [lang, setLang] = useState("en");
@@ -40,6 +41,7 @@ function App() {
                     <Route path="/employee/artists" element={<ManageArtists t={t} />} />
                     <Route path="/employee/artworks" element={<ManageArtworks t={t} />} />
 
+                    <Route path="/stats" element={<ArtworksStatistics t={t} />} />
                 </Routes>
             </BrowserRouter>
 

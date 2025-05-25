@@ -62,6 +62,15 @@ const translations = {
         description: "Description",
         exportArtworks: "Export Artworks",
         export: "Export",
+
+        artworkStatistics: "Artwork Statistics",
+        accessDenied: "Access Denied",
+        countByType: "Count of Artworks by Type",
+        countByArtist: "Count of Artworks by Artist",
+        noData: "No data available",
+        loadingStatistics: "Loading statistics...",
+        artworkStatisticsTitle: "Artwork Statistics",
+
     },
     fr: {
         welcomeTitle: "Bienvenue dans l'explorateur de musée",
@@ -126,6 +135,14 @@ const translations = {
         description: "Description",
         exportArtworks: "Exporter les œuvres",
         export: "Export",
+
+        artworkStatistics: "Statistiques des œuvres",
+        accessDenied: "Accès refusé",
+        countByType: "Nombre d'œuvres par type",
+        countByArtist: "Nombre d'œuvres par artiste",
+        noData: "Aucune donnée disponible",
+        loadingStatistics: "Chargement des statistiques...",
+
     },
     de: {
         welcomeTitle: "Willkommen im Museum Explorer",
@@ -190,6 +207,13 @@ const translations = {
         description: "Beschreibung",
         exportArtworks: "Kunstwerke exportieren",
         export: "Export",
+
+        artworkStatistics: "Kunstwerkstatistiken",
+        accessDenied: "Zugriff verweigert",
+        countByType: "Anzahl der Kunstwerke nach Typ",
+        countByArtist: "Anzahl der Kunstwerke nach Künstler",
+        noData: "Keine Daten verfügbar",
+        loadingStatistics: "Statistiken werden geladen...",
     },
 };
 

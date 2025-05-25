@@ -14,15 +14,11 @@ export default function Employee({ t }) {
             return;
         }
         const user = JSON.parse(userStr);
-        if (user.role !== "EMPLOYEE") {
+        if (user.role !== "EMPLOYEE" && user.role !== "MANAGER" && user.role !== "ADMIN") {
             alert(t.accessDenied || "Access denied");
             navigate("/");
         }
     }, [navigate, t]);
-
-    const handleExportLists = () => {
-        alert(t.exportLists || "Export lists functionality coming soon!");
-    };
 
     return (
         <div style={{
@@ -44,10 +40,6 @@ export default function Employee({ t }) {
 
                 <sl-button variant="success" size="large" pill onClick={() => navigate("/employee/artworks")}>
                     {t.manageArtworks}
-                </sl-button>
-
-                <sl-button variant="warning" size="large" pill onClick={handleExportLists}>
-                    {t.exportLists}
                 </sl-button>
             </div>
         </div>
