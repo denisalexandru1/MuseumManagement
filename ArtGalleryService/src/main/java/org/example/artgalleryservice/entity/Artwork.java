@@ -25,6 +25,17 @@ public class Artwork {
     @JsonBackReference
     private Artist artist;
 
+    public Artwork(String title, String type, String description, List<String> imageUrls, Artist artist) {
+        this.title = title;
+        this.type = type;
+        this.description = description;
+        this.imageUrls = imageUrls;
+        this.artist = artist;
+    }
+
+    public Artwork() {
+    }
+
     public UUID getId() {
         return id;
     }

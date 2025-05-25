@@ -5,7 +5,7 @@ import org.example.artgalleryservice.entity.Artwork;
 import java.util.List;
 import java.util.UUID;
 
-public class ArtworkDto {
+public class RetrieveArtworkDto {
     private UUID id;
     private String title;
     private String type;
@@ -13,9 +13,9 @@ public class ArtworkDto {
     private List<String> imageUrls;
     private String artistName;
 
-    public ArtworkDto() {} // Required for Jackson
+    public RetrieveArtworkDto() {} // Required for Jackson
 
-    public ArtworkDto(UUID id, String title, String type, String description, List<String> imageUrls, String artistName) {
+    public RetrieveArtworkDto(UUID id, String title, String type, String description, List<String> imageUrls, String artistName) {
         this.id = id;
         this.title = title;
         this.type = type;
@@ -24,7 +24,7 @@ public class ArtworkDto {
         this.artistName = artistName;
     }
 
-    public ArtworkDto(Artwork artwork) {
+    public RetrieveArtworkDto(Artwork artwork) {
         this(
                 artwork.getId(),
                 artwork.getTitle(),

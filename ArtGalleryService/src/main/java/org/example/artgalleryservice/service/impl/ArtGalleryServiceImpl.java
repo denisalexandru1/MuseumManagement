@@ -1,5 +1,7 @@
 package org.example.artgalleryservice.service.impl;
 
+import org.example.artgalleryservice.dto.RetrieveArtworkDto;
+import org.example.artgalleryservice.dto.UpdateArtworkDto;
 import org.example.artgalleryservice.entity.Artist;
 import org.example.artgalleryservice.entity.Artwork;
 import org.example.artgalleryservice.repository.ArtistRepository;
@@ -59,23 +61,37 @@ public class ArtGalleryServiceImpl implements ArtGalleryService{
 
     // Artwork methods
     @Override
-    public Artwork createArtwork(Artwork artwork) {
+    public Artwork createArtwork(UpdateArtworkDto artworkDto) {
+        Artist artist = artistRepository.findById(artworkDto.getArtistId())
+                .orElseThrow(() -> new RuntimeException("Artist not found"));
+
+        Artwork artwork = new Artwork(
+                artworkDto.getTitle(),
+                artworkDto.getType(),
+                artworkDto.getDescription(),
+                artworkDto.getImageUrls(),
+                artist
+        );
         return artworkRepository.save(artwork);
     }
 
     @Override
-    public Artwork updateArtwork(UUID id, Artwork artwork) {
+    public Artwork updateArtwork(UUID id, UpdateArtworkDto dto) {
         Artwork existing = artworkRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Artwork not found"));
 
-        existing.setTitle(artwork.getTitle());
-        existing.setType(artwork.getType());
-        existing.setDescription(artwork.getDescription());
-        existing.setImageUrls(artwork.getImageUrls());
-        existing.setArtist(artwork.getArtist());
+        Artist artist = artistRepository.findById(dto.getArtistId())
+                .orElseThrow(() -> new RuntimeException("Artist not found"));
+
+        existing.setTitle(dto.getTitle());
+        existing.setType(dto.getType());
+        existing.setDescription(dto.getDescription());
+        existing.setImageUrls(dto.getImageUrls());
+        existing.setArtist(artist);
 
         return artworkRepository.save(existing);
     }
+
 
     @Override
     public void deleteArtwork(UUID id) {

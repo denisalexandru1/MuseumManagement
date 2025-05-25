@@ -1,9 +1,9 @@
 package org.example.artgalleryservice.controller;
 
-import org.example.artgalleryservice.dto.ArtworkDto;
+import org.example.artgalleryservice.dto.RetrieveArtworkDto;
+import org.example.artgalleryservice.dto.UpdateArtworkDto;
 import org.example.artgalleryservice.entity.Artist;
 import org.example.artgalleryservice.entity.Artwork;
-import org.example.artgalleryservice.repository.ArtworkRepository;
 import org.example.artgalleryservice.service.ArtGalleryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,15 +54,13 @@ public class ArtGalleryController {
 
     // Artwork endpoints
     @PostMapping("/artwork")
-    public ResponseEntity<Artwork> createArtwork(@RequestBody Artwork artwork) {
-        Artwork createdArtwork = artGalleryService.createArtwork(artwork);
-        return ResponseEntity.ok(createdArtwork);
+    public ResponseEntity<Artwork> createArtwork(@RequestBody UpdateArtworkDto artwork) {
+        return ResponseEntity.ok(artGalleryService.createArtwork(artwork));
     }
 
     @PutMapping("/artwork/{id}")
-    public ResponseEntity<Artwork> updateArtwork(@PathVariable UUID id,@RequestBody Artwork artwork) {
-        Artwork updatedArtwork = artGalleryService.updateArtwork(id, artwork);
-        return ResponseEntity.ok(updatedArtwork);
+    public ResponseEntity<Artwork> updateArtwork(@PathVariable UUID id, @RequestBody UpdateArtworkDto artwork) {
+        return ResponseEntity.ok(artGalleryService.updateArtwork(id, artwork));
     }
 
     @DeleteMapping("/artwork/{id}")
@@ -72,22 +70,22 @@ public class ArtGalleryController {
     }
 
     @GetMapping("/artwork")
-    public ResponseEntity<List<ArtworkDto>> getAllArtworks() {
+    public ResponseEntity<List<RetrieveArtworkDto>> getAllArtworks() {
         List<Artwork> artworks = artGalleryService.getAllArtworks();
-        List<ArtworkDto> dtoList = artworks.stream()
-                .map(ArtworkDto::new)
+        List<RetrieveArtworkDto> dtoList = artworks.stream()
+                .map(RetrieveArtworkDto::new)
                 .toList();
         return ResponseEntity.ok(dtoList);
     }
 
     @GetMapping("/artwork/search")
-    public ResponseEntity<List<ArtworkDto>> searchAndFilterArtworks(
+    public ResponseEntity<List<RetrieveArtworkDto>> searchAndFilterArtworks(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String artist,
             @RequestParam(required = false) String type) {
 
         List<Artwork> artworks = artGalleryService.searchAndFilterArtworks(title, artist, type);
-        List<ArtworkDto> dtoList = artworks.stream().map(ArtworkDto::new).toList();
+        List<RetrieveArtworkDto> dtoList = artworks.stream().map(RetrieveArtworkDto::new).toList();
         return ResponseEntity.ok(dtoList);
     }
 }

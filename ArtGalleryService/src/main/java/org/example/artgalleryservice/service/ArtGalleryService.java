@@ -1,5 +1,7 @@
 package org.example.artgalleryservice.service;
 
+import org.example.artgalleryservice.dto.RetrieveArtworkDto;
+import org.example.artgalleryservice.dto.UpdateArtworkDto;
 import org.example.artgalleryservice.entity.Artist;
 import org.example.artgalleryservice.entity.Artwork;
 
@@ -15,8 +17,8 @@ public interface ArtGalleryService {
     List<Artist> searchArtistsByName(String name);
 
     // Artwork operations
-    Artwork createArtwork(Artwork artwork);
-    Artwork updateArtwork(UUID id, Artwork artwork);
+    Artwork createArtwork(UpdateArtworkDto artwork);
+    Artwork updateArtwork(UUID id, UpdateArtworkDto dto);
     void deleteArtwork(UUID id);
     List<Artwork> getAllArtworks();
     List<Artwork> filterArtworksByType(String type);
