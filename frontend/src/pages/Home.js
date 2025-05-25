@@ -3,6 +3,11 @@ import '@shoelace-style/shoelace/dist/components/button/button.js';
 import '@shoelace-style/shoelace/dist/components/card/card.js';
 
 function Home({ t }) {
+    // Citește userul din localStorage
+    const userStr = localStorage.getItem("loggedInUser");
+    const user = userStr ? JSON.parse(userStr) : null;
+    const isEmployee = user?.role === "EMPLOYEE";
+
     return (
         <div style={{
             display: 'flex',
@@ -25,7 +30,9 @@ function Home({ t }) {
                         margin: 0,
                         textAlign: 'center',
                         color: '#333'
-                    }}>{t.welcomeTitle}</h1>
+                    }}>
+                        {user ? `${t.welcomeBack}, ${user.username}!` : t.welcomeTitle}
+                    </h1>
                 </div>
 
                 <p style={{
@@ -52,11 +59,21 @@ function Home({ t }) {
                         </sl-button>
                     </Link>
 
-                    <Link to="/login">
-                        <sl-button variant="default" size="large" pill style={{ width: '100%' }}>
-                            🔐 {t.login}
-                        </sl-button>
-                    </Link>
+                    {!user && (
+                        <Link to="/login">
+                            <sl-button variant="default" size="large" pill style={{ width: '100%' }}>
+                                🔐 {t.login}
+                            </sl-button>
+                        </Link>
+                    )}
+
+                    {isEmployee && (
+                        <Link to="/employee">
+                            <sl-button variant="warning" size="large" pill style={{ width: '100%' }}>
+                                ⚙️ {t.employeeOperations}
+                            </sl-button>
+                        </Link>
+                    )}
                 </div>
             </sl-card>
         </div>
