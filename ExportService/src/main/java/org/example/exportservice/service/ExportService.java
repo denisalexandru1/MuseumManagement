@@ -1,17 +1,22 @@
 package org.example.exportservice.service;
 
+import org.example.exportservice.client.ArtGalleryClient;
 import org.example.exportservice.service.decorator.*;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class ExportService {
 
+    private final ArtGalleryClient artGalleryClient;
+
+    public ExportService(ArtGalleryClient artGalleryClient) {
+        this.artGalleryClient = artGalleryClient;
+    }
+
     public String exportData(String exportType, String entityType) {
-        Object dummyData = getDummyData(entityType);
+        Object data = getData(entityType);
         Exporter exporter = buildExporter(exportType);
-        return exporter.export(dummyData);
+        return exporter.export(data);
     }
 
     private Exporter buildExporter(String type) {
@@ -26,11 +31,11 @@ public class ExportService {
         };
     }
 
-    private Object getDummyData(String entityType) {
-        return switch (entityType.toLowerCase()) {
-            case "artwork" -> List.of("Artwork1", "Artwork2");
-            case "user" -> List.of("User1", "User2");
-            default -> throw new IllegalArgumentException("Unknown entity: " + entityType);
-        };
+    private Object getData(String entityType) {
+        if (!"artwork".equalsIgnoreCase(entityType)) {
+            throw new IllegalArgumentException("Currently only artwork export is supported");
+        }
+
+        return artGalleryClient.getArtworks();
     }
 }
