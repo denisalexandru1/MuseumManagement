@@ -84,6 +84,14 @@ function Home({ t }) {
                             </sl-button>
                         </Link>
                     )}
+
+                    {isAdmin && (
+                        <Link to="/admin">
+                            <sl-button variant="danger" size="large" pill style={{ width: '100%' }}>
+                                🛠️ {t.adminOperations}
+                            </sl-button>
+                        </Link>
+                    )}
                 </div>
             </sl-card>
         </div>

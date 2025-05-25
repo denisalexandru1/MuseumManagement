@@ -71,6 +71,7 @@ const translations = {
         loadingStatistics: "Loading statistics...",
         artworkStatisticsTitle: "Artwork Statistics",
 
+        adminOperations: "Admin Operations",
     },
     fr: {
         welcomeTitle: "Bienvenue dans l'explorateur de musée",
@@ -143,6 +144,8 @@ const translations = {
         noData: "Aucune donnée disponible",
         loadingStatistics: "Chargement des statistiques...",
 
+        adminOperations: "Opérations administratives",
+
     },
     de: {
         welcomeTitle: "Willkommen im Museum Explorer",
@@ -214,6 +217,8 @@ const translations = {
         countByArtist: "Anzahl der Kunstwerke nach Künstler",
         noData: "Keine Daten verfügbar",
         loadingStatistics: "Statistiken werden geladen...",
+
+        adminOperations: "Admin-Operationen",
     },
 };
 

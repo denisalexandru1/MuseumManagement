@@ -9,6 +9,7 @@ import translations from "./translations/translations";
 import ManageArtists from "./pages/ManageArtists";
 import ManageArtworks from "./pages/ManageArtworks";
 import ArtworksStatistics from "./pages/ArtworksStatistics";
+import AdminPage from "./pages/AdminPage";
 
 function App() {
     const [lang, setLang] = useState("en");
@@ -42,6 +43,7 @@ function App() {
                     <Route path="/employee/artworks" element={<ManageArtworks t={t} />} />
 
                     <Route path="/stats" element={<ArtworksStatistics t={t} />} />
+                    <Route path="/admin" element={<AdminPage t={t} />} />
                 </Routes>
             </BrowserRouter>
 
